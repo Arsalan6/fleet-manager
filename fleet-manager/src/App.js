@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -8,24 +7,41 @@ import Grid from '@mui/material/Grid';
 import TopBar from './components/topbar';
 import StarShipCard from './components/starShipCard';
 import { teal } from '@mui/material/colors';
+import FleetShipCard from './components/fleetShipCard';
 
 function App() {
   const [toggleDark, settoggleDark] = useState(false);
   const handleToggleChange = () => {
     settoggleDark(!toggleDark);
   }
+  // Todo: Maybe move theme to a separate file.
   const theme = createTheme({
     palette: {
       primary: {
         main: teal[500],
       },
       mode: toggleDark ? 'dark' : 'light',
-    }
+    },
+    components: {
+      MuiCard: {
+        styleOverrides: {
+          root: {
+            "& .hidden-button": {
+              display: "none"
+            },
+            "&:hover .hidden-button": {
+              display: "flex"
+            }
+          }
+        }
+      }
+    },
   });
 
   // Todo: Remove dummy data once API is added.
   const Starships = [
     {
+      "used_capacity": '100',
       "name": "CR90 corvette",
       "model": "CR90 corvette",
       "manufacturer": "Corellian Engineering Corporation",
@@ -50,6 +66,7 @@ function App() {
       "url": "https://swapi.dev/api/starships/2/"
     },
     {
+      "used_capacity": '0',
       "name": "Star Destroyer",
       "model": "Imperial I-class Star Destroyer",
       "manufacturer": "Kuat Drive Yards",
@@ -74,6 +91,7 @@ function App() {
       "url": "https://swapi.dev/api/starships/3/"
     },
     {
+      "used_capacity": '30',
       "name": "Sentinel-class landing craft",
       "model": "Sentinel-class landing craft",
       "manufacturer": "Sienar Fleet Systems, Cyngus Spaceworks",
@@ -96,6 +114,7 @@ function App() {
       "url": "https://swapi.dev/api/starships/5/"
     },
     {
+      "used_capacity": '1000',
       "name": "Death Star",
       "model": "DS-1 Orbital Battle Station",
       "manufacturer": "Imperial Department of Military Research, Sienar Fleet Systems",
@@ -118,6 +137,7 @@ function App() {
       "url": "https://swapi.dev/api/starships/9/"
     },
     {
+      "used_capacity": '0',
       "name": "Millennium Falcon",
       "model": "YT-1300 light freighter",
       "manufacturer": "Corellian Engineering Corporation",
@@ -147,6 +167,7 @@ function App() {
       "url": "https://swapi.dev/api/starships/10/"
     },
     {
+      "used_capacity": '0',
       "name": "Y-wing",
       "model": "BTL Y-wing",
       "manufacturer": "Koensayr Manufacturing",
@@ -171,6 +192,7 @@ function App() {
       "url": "https://swapi.dev/api/starships/11/"
     },
     {
+      "used_capacity": '0',
       "name": "X-wing",
       "model": "T-65 X-wing",
       "manufacturer": "Incom Corporation",
@@ -200,6 +222,7 @@ function App() {
       "url": "https://swapi.dev/api/starships/12/"
     },
     {
+      "used_capacity": '0',
       "name": "TIE Advanced x1",
       "model": "Twin Ion Engine Advanced x1",
       "manufacturer": "Sienar Fleet Systems",
@@ -224,6 +247,7 @@ function App() {
       "url": "https://swapi.dev/api/starships/13/"
     },
     {
+      "used_capacity": '0',
       "name": "Executor",
       "model": "Executor-class star dreadnought",
       "manufacturer": "Kuat Drive Yards, Fondor Shipyards",
@@ -247,6 +271,7 @@ function App() {
       "url": "https://swapi.dev/api/starships/15/"
     },
     {
+      "used_capacity": '0',
       "name": "Rebel transport",
       "model": "GR-75 medium transport",
       "manufacturer": "Gallofree Yards, Inc.",
@@ -283,7 +308,7 @@ function App() {
       {/* Main Section */}
       <Grid sx={{ p: '2rem' }}
         container spacing={2}>
-        <Grid item xs={8}>
+        <Grid item xs={12} sm={9} md={6} lg={8}>
           <Typography fontWeight={600} sx={{ flexGrow: 1 }} variant="h5" color="inherit">
             Search Starships
           </Typography>
@@ -302,13 +327,24 @@ function App() {
             No Starships found
           </Typography> */}
         </Grid>
-        <Grid item xs={4}>
-          <Typography fontWeight={600} sx={{ flexGrow: 1 }} variant="h5" color="inherit">
+        <Grid item xs={12} sm={3} lg={4}>
+          <Typography fontWeight={600} sx={{ flexGrow: 1, mb: 2 }} variant="h5" color="inherit">
             Your Fleet
           </Typography>
-          <Typography sx={{ flexGrow: 1 }} variant="body2" color="inherit">
+
+          <Grid container spacing={2}>
+            {Starships.map((starship, index) => {
+              return (
+                <FleetShipCard
+                  key={index}
+                  starship={starship}
+                />
+              )
+            })}
+          </Grid>
+          {/* <Typography sx={{ flexGrow: 1 }} variant="body2" color="inherit">
             Your fleet is empty, Add some Startships!
-          </Typography>
+          </Typography> */}
         </Grid>
       </Grid>
       {/* End Main Section */}
