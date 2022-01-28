@@ -11,40 +11,52 @@ import { useTranslation } from 'react-i18next';
 
 const StarShipCard = (props) => {
   const {
-    starship
+    starshipList
   } = props;
   const { t } = useTranslation();
 
   return (
-    <Grid item>
-      <Card sx={{ width: 275, height: 270 }} variant="outlined" >
-        <CardContent sx={{ height: '80%' }}>
-          <Typography variant="h5">
-            {starship.name}
-          </Typography>
-          <Typography sx={{ mb: 2.5 }} color="text.secondary">
-            {starship.model}
-          </Typography>
-          <Typography sx={{ fontWeight: 'bold' }} variant="body1">
-            {t('labels.class')}: {starship.starship_class}
-          </Typography>
-          <Typography sx={{ fontWeight: 'bold' }} variant="body1">
-            {t('labels.maxCapacity')}: {getFormattedCapacity(starship.crew, starship.passengers)}
-          </Typography>
-          <Typography variant="body1">
-            {t('labels.createdOn')}: {getFormattedDate(starship.created)}
-          </Typography>
-        </CardContent>
-        <CardActions sx={{ justifyContent: "space-between", alignContent: 'center', display: 'flex' }}>
-          <Button fullWidth variant="contained" endIcon={<AddToDriveIcon />}>{t('labels.addToFleet')}</Button>
-        </CardActions>
-      </Card>
-    </Grid>
+    starshipList.length ? (
+      <Grid container spacing={2}>
+        {starshipList.length && starshipList.map((starship, index) => {
+          return (
+            <Grid key={index} item>
+              <Card sx={{ width: 275, height: 270 }} variant="outlined" >
+                <CardContent sx={{ height: '80%' }}>
+                  <Typography variant="h5">
+                    {starship.name}
+                  </Typography>
+                  <Typography sx={{ mb: 2.5 }} color="text.secondary">
+                    {starship.model}
+                  </Typography>
+                  <Typography sx={{ fontWeight: 'bold' }} variant="body1">
+                    {t('labels.class')}: {starship.starship_class}
+                  </Typography>
+                  <Typography sx={{ fontWeight: 'bold' }} variant="body1">
+                    {t('labels.maxCapacity')}: {getFormattedCapacity(starship.crew, starship.passengers)}
+                  </Typography>
+                  <Typography variant="body1">
+                    {t('labels.createdOn')}: {getFormattedDate(starship.created)}
+                  </Typography>
+                </CardContent>
+                <CardActions sx={{ justifyContent: "space-between", alignContent: 'center', display: 'flex' }}>
+                  <Button fullWidth variant="contained" endIcon={<AddToDriveIcon />}>{t('labels.addToFleet')}</Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          )
+        })}
+      </Grid>
+    ) : (
+      <Typography sx={{ flexGrow: 1 }} variant="h6" color="inherit">
+        {t('messages.noStartShipsFound')}
+      </Typography>
+    )
   );
 }
 
 StarShipCard.propTypes = {
-  starship: PropTypes.object.isRequired,
+  starshipList: PropTypes.array.isRequired,
 };
 
 export default StarShipCard;

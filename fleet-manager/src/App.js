@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -9,12 +9,16 @@ import StarShipCard from './components/starShipCard';
 import { teal } from '@mui/material/colors';
 import FleetShipCard from './components/fleetShipCard';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchStarShipListStart } from './redux/starship/starship.actions';
+import StarShipCardLoader from './components/starShipCardLoader';
 
 function App() {
-  const [toggleDark, settoggleDark] = useState(false);
+  const dispatch = useDispatch();
+  const [toggleDark, setToggleDark] = useState(false);
   const { t } = useTranslation();
   const handleToggleChange = () => {
-    settoggleDark(!toggleDark);
+    setToggleDark(!toggleDark);
   }
   // Todo: Maybe move theme to a separate file.
   const theme = createTheme({
@@ -298,6 +302,21 @@ function App() {
     }
   ]
 
+  const [searchQuery, setSearchQuery] = useState(null);
+  useEffect(() => {
+    dispatch(
+      fetchStarShipListStart({
+        searchParam: searchQuery,
+      })
+    );
+  }, [dispatch, searchQuery]);
+
+  const handleSearchBarChange = (event) => {
+    setSearchQuery(event.target.value);
+  }
+
+  const starship = useSelector((state) => state.starship);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -314,30 +333,34 @@ function App() {
           <Typography fontWeight={600} sx={{ flexGrow: 1 }} variant="h5" color="inherit">
             {t('labels.searchStarShips')}
           </Typography>
-          <TextField sx={{ marginTop: '1rem', width: '26rem', marginBottom: '1rem' }} id="outlined-basic" placeholder="Enter Startship name" variant="outlined" />
-          <Grid container spacing={2}>
-            {Starships.map((starship, index) => {
-              return (
-                <StarShipCard
-                  key={index}
-                  starship={starship}
-                />
-              )
-            })}
-          </Grid>
-          {/* <Typography sx={{ flexGrow: 1 }} variant="h4" color="inherit">
-            {t('messages.noStartShipsFound')}
-          </Typography> */}
+          <TextField sx={{ marginTop: '1rem', width: '26rem', marginBottom: '1rem' }} id="outlined-basic" placeholder="Enter Starship name" variant="outlined" fullWidth onChange={handleSearchBarChange} />
+          {starship.loading ? (
+            <Grid container spacing={2}>
+              {Array.from(new Array(4)).map((item, index) => (
+                <StarShipCardLoader key={index} />
+              ))}
+            </Grid>
+          ) : (
+            starship.error ? (
+              <Typography sx={{ flexGrow: 1 }} variant="h4" color="inherit">
+                {t('messages.noStartShipsFound')}
+              </Typography>
+            ) : (
+              <StarShipCard
+                starshipList={starship.starshipList}
+              />
+            ))
+          }
         </Grid>
         <Grid item xs={12} sm={3} lg={4}>
           <Typography fontWeight={600} sx={{ flexGrow: 1, mb: 2 }} variant="h5" color="inherit">
-          {t('labels.yourFleet')}
+            {t('labels.yourFleet')}
           </Typography>
           <Typography sx={{ fontWeight: 'bold' }} variant="body1">
-          {t('labels.totalFleetCapacity')}: 1000000
+            {t('labels.totalFleetCapacity')}: 1000000
           </Typography>
           <Typography sx={{ fontWeight: 'bold', mb: '1.5rem' }} variant="body1">
-          {t('labels.usedFleetCapacity')}: 3000
+            {t('labels.usedFleetCapacity')}: 3000
           </Typography>
           <Grid container spacing={2}>
             {Starships.map((starship, index) => {
