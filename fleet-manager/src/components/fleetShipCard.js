@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import CardHeader from '@mui/material/CardHeader';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import { useTranslation } from 'react-i18next';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 20,
@@ -26,6 +26,7 @@ const FleetShipCard = (props) => {
   const {
     starship
   } = props;
+  const { t } = useTranslation();
 
   return (
     <Grid item>
@@ -41,10 +42,10 @@ const FleetShipCard = (props) => {
         />
         <CardContent>
           <Typography sx={{ fontWeight: 'bold' }} variant="body1">
-            Max. Capacity: {getFormattedCapacity(starship.crew, starship.passengers)}
+            {t('labels.maxCapacity')}: {getFormattedCapacity(starship.crew, starship.passengers)}
           </Typography>
           <Typography sx={{ fontWeight: 'bold', mb: 1 }} variant="body1">
-            Used Capacity: {starship.used_capacity}
+            {t('labels.usedCapacity')}: {starship.used_capacity}
           </Typography>
           <BorderLinearProgress variant="determinate" value={(starship.used_capacity / getFormattedCapacity(starship.crew, starship.passengers)) * 100} />
         </CardContent>

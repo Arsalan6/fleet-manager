@@ -8,9 +8,11 @@ import TopBar from './components/topbar';
 import StarShipCard from './components/starShipCard';
 import { teal } from '@mui/material/colors';
 import FleetShipCard from './components/fleetShipCard';
+import { useTranslation } from 'react-i18next';
 
 function App() {
   const [toggleDark, settoggleDark] = useState(false);
+  const { t } = useTranslation();
   const handleToggleChange = () => {
     settoggleDark(!toggleDark);
   }
@@ -310,7 +312,7 @@ function App() {
         container spacing={2}>
         <Grid item xs={12} sm={9} md={6} lg={8}>
           <Typography fontWeight={600} sx={{ flexGrow: 1 }} variant="h5" color="inherit">
-            Search Starships
+            {t('labels.searchStarShips')}
           </Typography>
           <TextField sx={{ marginTop: '1rem', width: '26rem', marginBottom: '1rem' }} id="outlined-basic" placeholder="Enter Startship name" variant="outlined" />
           <Grid container spacing={2}>
@@ -324,14 +326,19 @@ function App() {
             })}
           </Grid>
           {/* <Typography sx={{ flexGrow: 1 }} variant="h4" color="inherit">
-            No Starships found
+            {t('messages.noStartShipsFound')}
           </Typography> */}
         </Grid>
         <Grid item xs={12} sm={3} lg={4}>
           <Typography fontWeight={600} sx={{ flexGrow: 1, mb: 2 }} variant="h5" color="inherit">
-            Your Fleet
+          {t('labels.yourFleet')}
           </Typography>
-
+          <Typography sx={{ fontWeight: 'bold' }} variant="body1">
+          {t('labels.totalFleetCapacity')}: 1000000
+          </Typography>
+          <Typography sx={{ fontWeight: 'bold', mb: '1.5rem' }} variant="body1">
+          {t('labels.usedFleetCapacity')}: 3000
+          </Typography>
           <Grid container spacing={2}>
             {Starships.map((starship, index) => {
               return (
@@ -343,7 +350,7 @@ function App() {
             })}
           </Grid>
           {/* <Typography sx={{ flexGrow: 1 }} variant="body2" color="inherit">
-            Your fleet is empty, Add some Startships!
+            {t('messages.yourFleetIsEmptyAddShips')}
           </Typography> */}
         </Grid>
       </Grid>

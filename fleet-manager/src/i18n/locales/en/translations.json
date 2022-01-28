@@ -1,0 +1,20 @@
+{
+  "labels": {
+    "starShipFleetManager": "Starship Fleet manager",
+    "searchStarShips": "Search Starships",
+    "light": "Light",
+    "dark": "Dark",
+    "yourFleet": "Your Fleet",
+    "totalFleetCapacity": "Total Fleet Capacity",
+    "usedFleetCapacity": "Used Fleet Capacity",
+    "class": "Class",
+    "maxCapacity": "Max. Capacity",
+    "usedCapacity": "Used Capacity",
+    "createdOn": "Created on",
+    "addToFleet": "Add to Fleet"
+  },
+  "messages": {
+    "noStartShipsFound": "No Starships found",
+    "yourFleetIsEmptyAddShips": "Your fleet is empty, Add some Startships!"
+  }
+}

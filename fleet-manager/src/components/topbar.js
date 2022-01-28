@@ -6,14 +6,15 @@ import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 const TopBar = (props) => {
   const {
     onToggleChange,
     isDark
   } = props;
-
-  const handleToggle  = () => {
+  const { t } = useTranslation();
+  const handleToggle = () => {
     onToggleChange();
   }
 
@@ -22,7 +23,7 @@ const TopBar = (props) => {
       <Toolbar>
         <AirplanemodeActiveIcon sx={{ mr: 2 }} />
         <Typography sx={{ flexGrow: 1 }} variant="h6" color="inherit">
-          Star Feet Manager
+          {t('labels.starShipFleetManager')}
         </Typography>
         <FormGroup>
           <FormControlLabel
@@ -30,10 +31,9 @@ const TopBar = (props) => {
               <Switch
                 checked={isDark}
                 onChange={handleToggle}
-                aria-label="login switch"
               />
             }
-            label={isDark ? 'Dark' : 'Light'}
+            label={isDark ? t('labels.dark') : t('labels.light')}
           />
         </FormGroup>
       </Toolbar>
