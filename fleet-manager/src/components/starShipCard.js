@@ -5,20 +5,21 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { getFormattedCapacity, getFormattedDate } from '../config/util';
+import { getTotalCapacity, getFormattedDate } from '../config/util';
 import AddToDriveIcon from '@mui/icons-material/AddToDrive';
 import { useTranslation } from 'react-i18next';
 
 const StarShipCard = (props) => {
   const {
-    starshipList
+    starshipList,
+    addToFleet,
   } = props;
   const { t } = useTranslation();
 
   return (
     starshipList.length ? (
       <Grid container spacing={2}>
-        {starshipList.length && starshipList.map((starship, index) => {
+        {starshipList.map((starship, index) => {
           return (
             <Grid key={index} item>
               <Card sx={{ width: 275, height: 270 }} variant="outlined" >
@@ -33,14 +34,14 @@ const StarShipCard = (props) => {
                     {t('labels.class')}: {starship.starship_class}
                   </Typography>
                   <Typography sx={{ fontWeight: 'bold' }} variant="body1">
-                    {t('labels.maxCapacity')}: {getFormattedCapacity(starship.crew, starship.passengers)}
+                    {t('labels.maxCapacity')}: {getTotalCapacity(starship.crew, starship.passengers)}
                   </Typography>
                   <Typography variant="body1">
                     {t('labels.createdOn')}: {getFormattedDate(starship.created)}
                   </Typography>
                 </CardContent>
                 <CardActions sx={{ justifyContent: "space-between", alignContent: 'center', display: 'flex' }}>
-                  <Button fullWidth variant="contained" endIcon={<AddToDriveIcon />}>{t('labels.addToFleet')}</Button>
+                  <Button fullWidth variant="contained" endIcon={<AddToDriveIcon />} onClick={addToFleet.bind(this, starship)}>{t('labels.addToFleet')}</Button>
                 </CardActions>
               </Card>
             </Grid>
@@ -57,6 +58,7 @@ const StarShipCard = (props) => {
 
 StarShipCard.propTypes = {
   starshipList: PropTypes.array.isRequired,
+  addToFleet: PropTypes.func.isRequired
 };
 
 export default StarShipCard;

@@ -15,7 +15,7 @@ export const getFormattedDate = (date) => {
  * @param passengerCount
  * @returns total count with commas
  */
-export const getFormattedCapacity = (crewCount, passengerCount) => {
+export const getTotalCapacity = (crewCount, passengerCount, formatted = true) => {
   crewCount = crewCount.replace(/,/g, '');
   if (crewCount.includes('-')) {
     crewCount = Math.max.apply(Math, crewCount.split('-'));
@@ -29,5 +29,5 @@ export const getFormattedCapacity = (crewCount, passengerCount) => {
   } else if (isNaN(+passengerCount)) {
     passengerCount = 0;
   }
-  return new Intl.NumberFormat('en-US').format(+crewCount + +passengerCount);
+  return formatted ? new Intl.NumberFormat('en-US').format(+crewCount + +passengerCount) : +crewCount + +passengerCount;
 }

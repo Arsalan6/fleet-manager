@@ -2,6 +2,7 @@ import starshipActionTypes from './starship.types';
 
 const INITIAL_STATE = {
   starshipList: [],
+  userFleet: [],
   error: null,
   loading: false,
 };
@@ -28,6 +29,17 @@ const starshipReducer = (state = INITIAL_STATE, action) => {
         starshipList: [],
         error: action.payload,
         loading: false,
+      };
+    case starshipActionTypes.ADD_STARSHIP_IN_FLEET:
+      return {
+        ...state,
+        userFleet: state.userFleet.some(fleetship => fleetship.url === action.payload.url) ?
+          state.userFleet : [action.payload, ...state.userFleet],
+      };
+    case starshipActionTypes.REMOVE_STARSHIP_FROM_FLEET:
+      return {
+        ...state,
+        userFleet: state.userFleet.filter(fleetShip => fleetShip.url !== action.payload.url),
       };
     default:
       return state;
