@@ -1,5 +1,5 @@
 # fleet manager
-Starwas fleet manager.
+Starwars fleet manager.
 
 ## Tech stack
 - Reactjs
