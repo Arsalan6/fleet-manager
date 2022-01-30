@@ -31,3 +31,12 @@ export const getTotalCapacity = (crewCount, passengerCount, formatted = true) =>
   }
   return formatted ? new Intl.NumberFormat('en-US').format(+crewCount + +passengerCount) : +crewCount + +passengerCount;
 }
+
+/**
+ * Function to get number in comma separate format
+ * @param numberToBeFormatted
+ * @returns formatted number with commas
+ */
+export const getFormattedNumber = (numberToBeFormatted) => {
+  return new Intl.NumberFormat('en-US').format(numberToBeFormatted);
+}

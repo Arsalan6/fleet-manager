@@ -6,6 +6,14 @@ const constants = {
         getAll: '/starships'
       }
     }
+  },
+  ui: {
+    toast: {
+      success: 'success',
+      info: 'info',
+      warn: 'warn',
+      error: 'error'
+    },
   }
 };
 

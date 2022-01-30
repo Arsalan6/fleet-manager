@@ -9,10 +9,11 @@ import { getTotalCapacity, getFormattedDate } from '../config/util';
 import AddToDriveIcon from '@mui/icons-material/AddToDrive';
 import { useTranslation } from 'react-i18next';
 
-const StarShipCard = (props) => {
+const StarShipSection = (props) => {
   const {
     starshipList,
     addToFleet,
+    onCardClick
   } = props;
   const { t } = useTranslation();
 
@@ -22,7 +23,7 @@ const StarShipCard = (props) => {
         {starshipList.map((starship, index) => {
           return (
             <Grid key={index} item>
-              <Card sx={{ width: 275, height: 270 }} variant="outlined" >
+              <Card onClick={onCardClick.bind(this, starship)} sx={{ width: 275, height: 270 }} variant="outlined" >
                 <CardContent sx={{ height: '80%' }}>
                   <Typography variant="h5">
                     {starship.name}
@@ -56,9 +57,10 @@ const StarShipCard = (props) => {
   );
 }
 
-StarShipCard.propTypes = {
+StarShipSection.propTypes = {
   starshipList: PropTypes.array.isRequired,
-  addToFleet: PropTypes.func.isRequired
+  addToFleet: PropTypes.func.isRequired,
+  onCardClick: PropTypes.func.isRequired,
 };
 
-export default StarShipCard;
+export default StarShipSection;

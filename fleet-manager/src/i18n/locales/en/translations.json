@@ -11,10 +11,28 @@
     "maxCapacity": "Max. Capacity",
     "usedCapacity": "Used Capacity",
     "createdOn": "Created on",
-    "addToFleet": "Add to Fleet"
+    "addToFleet": "Add to Fleet",
+    "name": "Name",
+    "model": "Model",
+    "crew": "crew",
+    "passengersCount": "Passengers Count",
+    "maxPassengersCount": "Max. Passengers Count",
+    "maxAtmSpeed": "Max. Atm Speed",
+    "manufacturer": "Manufacture",
+    "costInCredits": "Cost in credits",
+    "cargoCapacityInKg": "Cargo Capacity (kg)",
+    "hyperDriveRating": "Hyper drive rating",
+    "mglt": "MGLT",
+    "consumables": "Consumables",
+    "length": "Length",
+    "passengersOnboard": "Passengers Onboard",
+    "close": "Close",
+    "save": "Save"
   },
   "messages": {
     "noStartShipsFound": "No Starships found",
-    "yourFleetIsEmptyAddShips": "Your fleet is empty, Add some Starships!"
+    "yourFleetIsEmptyAddShips": "Your fleet is empty, Add some Starships!",
+    "starshipAlreadyExist": "Starship already exist in the fleet.",
+    "starshipRemovedFromFleet": "Starship removed from fleet successfully."
   }
 }
