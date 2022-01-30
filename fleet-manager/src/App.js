@@ -59,7 +59,7 @@ function App() {
   });
 
   const starshipStore = useSelector((state) => state.starship);
-  const [searchQuery, setSearchQuery] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   useEffect(() => {
     dispatch(
       fetchStarShipListStart({
@@ -68,19 +68,19 @@ function App() {
     );
   }, [dispatch]);
 
-  const searchStarShips = () => {
+  const searchStarShips = (searchParam) => {
     dispatch(
       fetchStarShipListStart({
-        searchParam: searchQuery,
+        searchParam,
       })
     );
   }
 
-  const delayedSearchStarship = useCallback(debounce(searchStarShips, 600), []);
+  const delayedSearchStarship = useCallback(debounce((q) => searchStarShips(q), 600), []);
 
   const handleSearchBarChange = (event) => {
     setSearchQuery(event.target.value);
-    delayedSearchStarship();
+    delayedSearchStarship(event.target.value);
   }
 
   const handleAddToFleet = (starshipToAddParam, event) => {
@@ -141,7 +141,14 @@ function App() {
           <Typography fontWeight={600} sx={{ flexGrow: 1 }} variant="h5" color="inherit">
             {t('labels.searchStarShips')}
           </Typography>
-          <TextField sx={{ marginTop: '1rem', width: '26rem', marginBottom: '1rem' }} id="outlined-basic" placeholder="Enter Starship name" variant="outlined" fullWidth onChange={handleSearchBarChange} />
+          <TextField
+            sx={{ marginTop: '1rem', width: '26rem', marginBottom: '1rem' }}
+            id="outlined-basic"
+            placeholder="Enter Starship name"
+            variant="outlined"
+            fullWidth
+            value={searchQuery}
+            onChange={handleSearchBarChange} />
           {starshipStore.loading ? (
             <Grid container spacing={2}>
               {Array.from(new Array(4)).map((item, index) => (

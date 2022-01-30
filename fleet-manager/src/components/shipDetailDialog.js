@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
-import { getFormattedDate, getFormattedNumber } from '../config/util';
+import { getFormattedDate, getFormattedNumber, getTotalCapacity } from '../config/util';
 import Grid from '@mui/material/Grid';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
@@ -92,7 +92,11 @@ const ShipDetailDialog = (props) => {
             <Typography sx={{ fontWeight: 'bold' }} variant="body1">{selectedShip?.model} </Typography>
             <Typography sx={{ fontWeight: 'bold' }} variant="body1">{selectedShip?.crew} </Typography>
             <Typography sx={{ fontWeight: 'bold' }} variant="body1">{selectedShip?.passengers} </Typography>
-            <Typography sx={{ fontWeight: 'bold' }} variant="body1">{getFormattedNumber(selectedShip?.max_capacity)} </Typography>
+            <Typography
+              sx={{ fontWeight: 'bold' }}
+              variant="body1">
+              {isFleetShip ? getFormattedNumber(selectedShip?.max_capacity) : getTotalCapacity(selectedShip?.crew || "0", selectedShip?.passengers || "0")}
+              </Typography>
             <Typography variant="body1">{selectedShip?.max_atmosphering_speed} </Typography>
             <Typography variant="body1">{selectedShip?.manufacturer} </Typography>
             <Typography variant="body1">{getFormattedNumber(selectedShip?.cost_in_credits)} credits </Typography>
